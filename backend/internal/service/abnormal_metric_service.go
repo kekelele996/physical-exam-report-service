@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"log/slog"
 
@@ -30,9 +29,6 @@ func (s *AbnormalMetricService) List(ctx context.Context, examineeID uint, page,
 
 // UpdateFollowUp 更新复查跟踪与专科建议。
 func (s *AbnormalMetricService) UpdateFollowUp(ctx context.Context, id uint, status, advice string) (*model.AbnormalMetric, error) {
-	if status != constants.FollowUpPending && status != constants.FollowUpDone {
-		return nil, util.BadRequest("复查状态（AbnormalMetric.follow_up_status）不合法", errors.New("invalid status"))
-	}
 	if err := s.repo.UpdateFollowUp(id, status, advice); err != nil {
 		return nil, util.LogError(s.log, constants.LOG_ABNORMAL_METRIC_FOLLOWUP, fmt.Errorf("update follow-up: %w", err))
 	}

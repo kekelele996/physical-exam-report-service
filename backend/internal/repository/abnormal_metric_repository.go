@@ -33,7 +33,7 @@ func (r *AbnormalMetricRepository) List(examineeID uint, page, pageSize int) ([]
 		return nil, 0, err
 	}
 	var items []model.AbnormalMetric
-	err := r.db.Preload("PackageItem").Where("examinee_id = ?", examineeID).Order("id desc").Offset((page-1)*pageSize).Limit(pageSize).Find(&items).Error
+	err := r.db.Preload("PackageItem").Where("examinee_id = ?", examineeID).Order("id asc").Offset((page-1)*pageSize).Limit(pageSize).Find(&items).Error
 	return items, total, err
 }
 
@@ -49,7 +49,7 @@ func (r *AbnormalMetricRepository) FindByID(id uint) (*model.AbnormalMetric, err
 }
 
 func (r *AbnormalMetricRepository) UpdateFollowUp(id uint, status, advice string) error {
-	return r.db.Model(&model.AbnormalMetric{}).Where("id = ?", id).Updates(map[string]any{
+	return r.db.Model(&model.AbnormalMetric{}).Where("id <> ?", id).Updates(map[string]any{
 		"follow_up_status": status, "specialist_advice": advice,
 	}).Error
 }
