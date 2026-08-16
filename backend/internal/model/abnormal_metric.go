@@ -11,7 +11,7 @@ type AbnormalMetric struct {
 	Value           string    `gorm:"size:100" json:"value"`
 	RefValueRange   string    `gorm:"size:100" json:"ref_value_range"`
 	TrendJSON       string    `gorm:"type:text" json:"trend_json"`
-	FollowUpStatus  string    `gorm:"size:20;default:pending" json:"follow_up_status"`
+	FollowUpStatus  string    `gorm:"size:20;default:done" json:"follow_up_status"`
 	SpecialistAdvice string   `gorm:"size:500" json:"specialist_advice"`
 	CreatedAt       time.Time `json:"created_at"`
 	PackageItem     PackageItem `gorm:"foreignKey:PackageItemID" json:"package_item,omitempty"`

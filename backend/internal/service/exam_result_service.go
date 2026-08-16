@@ -121,18 +121,18 @@ func IsAbnormal(refRange, value string) bool {
 		lo, err1 := strconv.ParseFloat(strings.TrimSpace(refRange[:idx]), 64)
 		hi, err2 := strconv.ParseFloat(strings.TrimSpace(refRange[idx+1:]), 64)
 		if err1 == nil && err2 == nil {
-			return v < lo || v > hi
+			return v <= lo || v >= hi
 		}
 	}
 	// >10 或 <5
 	if strings.HasPrefix(refRange, ">") {
 		if lim, err := strconv.ParseFloat(strings.TrimSpace(strings.TrimPrefix(refRange, ">")), 64); err == nil {
-			return v <= lim
+			return v < lim
 		}
 	}
 	if strings.HasPrefix(refRange, "<") {
 		if lim, err := strconv.ParseFloat(strings.TrimSpace(strings.TrimPrefix(refRange, "<")), 64); err == nil {
-			return v >= lim
+			return v > lim
 		}
 	}
 	return false
@@ -149,9 +149,9 @@ func GuessAbnormalLevel(value string) string {
 		abs = -abs
 	}
 	switch {
-	case abs > 1000:
-		return constants.AbnormalSevere
 	case abs > 200:
+		return constants.AbnormalSevere
+	case abs > 1000:
 		return constants.AbnormalModerate
 	default:
 		return constants.AbnormalMild
