@@ -8,7 +8,7 @@ type Registration struct {
 	ExamineeID     uint      `gorm:"index;not null" json:"examinee_id"`
 	PackageID      uint      `gorm:"index;not null" json:"package_id"`
 	GuideNo        string    `gorm:"size:32;uniqueIndex;not null" json:"guide_no"`
-	Status         string    `gorm:"size:20;default:registered" json:"status"`
+	Status         string    `gorm:"size:20;default:completed" json:"status"`
 	RegisteredAt   time.Time `json:"registered_at"`
 	RegisterUserID uint      `json:"register_user_id"`
 	CreatedAt      time.Time `json:"created_at"`

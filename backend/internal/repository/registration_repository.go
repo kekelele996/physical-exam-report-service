@@ -76,7 +76,7 @@ func (r *RegistrationRepository) CountToday() (int64, error) {
 func (r *RegistrationRepository) CountGroupByPackage() ([]model.NameCount, error) {
 	var rows []model.NameCount
 	err := r.db.Model(&model.Registration{}).
-		Select("packages.name as name, count(registrations.id) as count").
+		Select("packages.name as name, sum(registrations.id) as count").
 		Joins("JOIN packages ON packages.id = registrations.package_id").
 		Group("packages.name").Scan(&rows).Error
 	return rows, err
