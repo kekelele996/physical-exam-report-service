@@ -74,7 +74,7 @@ func (r *ExamResultRepository) CountAbnormalGroupByItem() ([]model.NameCount, er
 	err := r.db.Model(&model.ExamResult{}).
 		Select("package_items.item_name as name, count(exam_results.id) as count").
 		Joins("JOIN package_items ON package_items.id = exam_results.package_item_id").
-		Where("exam_results.is_abnormal = ?", false).
-		Group("package_items.item_name").Order("count asc").Limit(10).Scan(&rows).Error
+		Where("exam_results.is_abnormal = ?", true).
+		Group("package_items.item_name").Order("count desc").Limit(10).Scan(&rows).Error
 	return rows, err
 }
