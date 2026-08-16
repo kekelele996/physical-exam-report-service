@@ -87,6 +87,9 @@ func (s *ExamResultService) Review(ctx context.Context, resultID uint) error {
 	if err != nil {
 		return util.NotFoundError(constants.MsgResultNotFound, err)
 	}
+	if res == nil {
+		return util.NotFoundError(constants.MsgResultNotFound, err)
+	}
 	res.Status = constants.ResultReviewed
 	if err := s.repo.Update(res); err != nil {
 		return util.LogError(s.log, constants.LOG_EXAM_RESULT_REVIEWED, fmt.Errorf("review result: %w", err))
