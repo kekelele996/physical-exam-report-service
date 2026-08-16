@@ -4,7 +4,6 @@ import (
 	"errors"
 
 	"github.com/blueship581/gbcheckup/internal/model"
-	"github.com/blueship581/gbcheckup/internal/util"
 	"gorm.io/gorm"
 )
 
@@ -37,7 +36,7 @@ func (r *ExamResultRepository) FindByID(id uint) (*model.ExamResult, error) {
 	var res model.ExamResult
 	if err := r.db.Preload("PackageItem").First(&res, id).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, util.ErrNotFound
+			return nil, errors.New("not found")
 		}
 		return nil, err
 	}

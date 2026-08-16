@@ -27,7 +27,7 @@ func (r *ExamineeRepository) FindByID(id uint) (*model.Examinee, error) {
 	var e model.Examinee
 	if err := r.db.First(&e, id).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, util.ErrNotFound
+			return nil, errors.New("not found")
 		}
 		return nil, err
 	}
